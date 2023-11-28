@@ -1,2 +1,2 @@
-# net-basic
- Aprendiendo a utilizar .Net
+# Tecnología .Net Microsoft
+ Aprendiendo a utilizar .Net de microsoft
