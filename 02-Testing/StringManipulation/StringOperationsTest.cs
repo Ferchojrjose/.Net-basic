@@ -1,9 +1,13 @@
+using Humanizer;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Moq;
 
 
 namespace StringManipulation
@@ -103,7 +107,7 @@ namespace StringManipulation
         }
 
 
-         [Fact]
+        [Fact]
         public void GetStringLengthTest_Exeption()
         {
             // Arrange
@@ -131,6 +135,40 @@ namespace StringManipulation
             Assert.Equal(expected, result);
 
         }
+
+
+        [Fact]
+        public void CountOccurrencesTest()
+        {
+            // Arrange
+            var mockLogger = new Mock<ILogger<StringOperations>>();
+            var stringOperations = new StringOperations(mockLogger.Object);
+    
+            // Act
+            var result = stringOperations.CountOccurrences("Hello World", 'l');
+
+            // Assert
+            Assert.Equal(3, result);
+        }
+
+
+        [Fact]
+        public void ReadFileTest()
+        {
+            // Arrange
+            var stringOperations = new StringOperations();
+            var mockFileReader = new Mock<IFileReaderConector>();
+
+            mockFileReader.Setup(fr => fr.ReadString(It.IsAny<string>())).Returns("Hello World");
+    
+            // Act
+            var result = stringOperations.ReadFile(mockFileReader.Object, "test.txt");
+
+            // Assert
+            Assert.Equal("Hello World", result);
+        }
+
+        
 
     }
 
